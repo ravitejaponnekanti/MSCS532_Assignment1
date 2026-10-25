@@ -2,8 +2,10 @@
 
 import random
 import unittest
+from unittest.mock import patch
+from io import StringIO
 
-from insertion_sort import insertion_sort_descending
+from insertion_sort import insertion_sort_descending, main
 
 
 class InsertionSortTests(unittest.TestCase):
@@ -23,6 +25,22 @@ class InsertionSortTests(unittest.TestCase):
             values = [rng.randint(-50, 50) for _ in range(length)]
             expected = sorted(values, reverse=True)
             self.assertEqual(insertion_sort_descending(values), expected)
+
+    def test_keyboard_input(self):
+        with patch("builtins.input", return_value=" 5 -2 4 6 4 "), \
+                patch("sys.stdout", new_callable=StringIO) as output:
+            main()
+        self.assertIn("Original array: [5, -2, 4, 6, 4]", output.getvalue())
+        self.assertIn("Descending order: [6, 5, 4, 4, -2]", output.getvalue())
+
+    def test_invalid_and_blank_input_retry(self):
+        with patch("builtins.input", side_effect=["", "3 hello", "1.5", "3 1"]) as read, \
+                patch("sys.stdout", new_callable=StringIO) as output:
+            main()
+        self.assertEqual(read.call_count, 4)
+        self.assertIn("Please enter at least one integer.", output.getvalue())
+        self.assertEqual(output.getvalue().count("Invalid input."), 2)
+        self.assertIn("Descending order: [3, 1]", output.getvalue())
 
 
 if __name__ == "__main__":

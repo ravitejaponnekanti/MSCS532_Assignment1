@@ -15,9 +15,14 @@ python insertion_sort.py
 python -m unittest -v
 ```
 
-Example output:
+When prompted, type integers separated by spaces and press Enter. Negative
+numbers and duplicates are supported. Blank input, words, and decimal values
+produce a message and let you try again.
+
+Example session:
 
 ```text
+Enter integers separated by spaces: 5 2 4 6 1 3 2
 Original array: [5, 2, 4, 6, 1, 3, 2]
 Descending order: [6, 5, 4, 3, 2, 2, 1]
 ```
@@ -40,6 +45,7 @@ time are O(n^2). Auxiliary space is O(1).
 
 Tests cover empty and single-element lists, duplicates, negative values,
 ascending and descending inputs, and 100 reproducible random lists.
+They also check keyboard input and retrying after invalid or blank input.
 
 ## VS Code setup
 

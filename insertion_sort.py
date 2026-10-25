@@ -19,7 +19,18 @@ def insertion_sort_descending(values):
 
 
 def main():
-    numbers = [5, 2, 4, 6, 1, 3, 2]
+    while True:
+        user_input = input("Enter integers separated by spaces: ")
+        try:
+            numbers = [int(value) for value in user_input.split()]
+        except ValueError:
+            print("Invalid input. Enter whole numbers only, such as: 5 -2 4 6")
+            continue
+        if not numbers:
+            print("Please enter at least one integer.")
+            continue
+        break
+
     print("Original array:", numbers)
     insertion_sort_descending(numbers)
     print("Descending order:", numbers)
